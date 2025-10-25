@@ -1,5 +1,7 @@
 HELP.md
 data/
+*.mv.db
+*.trace.db
 uploads/
 target/
 .mvn/wrapper/maven-wrapper.jar

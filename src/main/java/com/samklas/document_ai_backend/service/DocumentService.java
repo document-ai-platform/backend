@@ -3,6 +3,7 @@ package com.samklas.document_ai_backend.service;
 import com.samklas.document_ai_backend.dto.DocumentListResponse;
 import com.samklas.document_ai_backend.dto.DocumentResponse;
 import com.samklas.document_ai_backend.entity.Document;
+import com.samklas.document_ai_backend.integration.MLServiceClient;
 import com.samklas.document_ai_backend.repository.DocumentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,13 +30,15 @@ public class DocumentService {
     private static final Logger logger = LoggerFactory.getLogger(DocumentService.class);
 
     private final DocumentRepository documentRepository;
+    private final MLServiceClient mlServiceClient;
 
 
     @Value("${document.storage.path:./uploads}")
     private String uploadPath;
 
-    public DocumentService(DocumentRepository documentRepository) {
+    public DocumentService(DocumentRepository documentRepository, MLServiceClient mlServiceClient) {
         this.documentRepository = documentRepository;
+        this.mlServiceClient = mlServiceClient;
 
     }
 
@@ -130,21 +133,21 @@ public class DocumentService {
             Path filePath = Paths.get(document.getFilepath());
             byte[] fileContent = Files.readAllBytes(filePath);
 
-            /*
+
             MLServiceClient.MLResponse mlResponse = mlServiceClient.processDocument(
                     fileContent,
                     document.getContentType()
             );
 
-             */
+
 
             // Update document with results
-            /*
+
             document.setExtractedText(mlResponse.getExtractedText());
             document.setDocumentType(mlResponse.getDocumentType());
             document.setConfidenceScore(mlResponse.getConfidence());
 
-             */
+
             document.setStatus("COMPLETED");
             document.setProcessedAt(LocalDateTime.now());
 
