@@ -53,9 +53,8 @@ public class MLServiceClient {
 
             HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-            //todo: enable actual request
             // Call ML service
-           /* ResponseEntity<MLResponse> response = restTemplate.exchange(
+            ResponseEntity<MLResponse> response = restTemplate.exchange(
                     endpoint,
                     HttpMethod.POST,
                     requestEntity,
@@ -72,18 +71,23 @@ public class MLServiceClient {
                 throw new MLServiceException("ML service returned unexpected response");
             }
 
-            */
+
 
         } catch (RestClientException e) {
             logger.error("Error calling ML service", e);
             throw new MLServiceException("Failed to communicate with ML service: " + e.getMessage(), e);
         }
 
+        /*
+        // mocking
+
         return new MLResponse(
                 "Mock extracted text from document",
                 "INVOICE",
                 0.85
         );
+
+         */
     }
 
     /**
